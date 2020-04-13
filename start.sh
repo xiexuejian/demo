@@ -1,0 +1,1 @@
+'nohup java -jar ./target/sample.jar &'
