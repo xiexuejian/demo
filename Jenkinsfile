@@ -26,7 +26,7 @@ pipeline {
           steps{
             script{
               sh 'nohup java -jar ./target/sample.jar  &'
-              sh "sleep 10"
+#              sh "sleep 10"
             }
           }
         }
