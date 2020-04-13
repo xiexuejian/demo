@@ -23,9 +23,7 @@ pipeline {
         }
         stage('开始运行'){
           steps{
-
             withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-
           	retry(3) {
           		script{
           			sh 'nohup java -jar ./target/sample.jar  &'
