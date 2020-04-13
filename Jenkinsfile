@@ -24,7 +24,7 @@ pipeline {
 
         stage('开始运行'){
           steps{
-            sh "nohup java -jar ./target/sample.jar &"
+            sh " java -jar ./target/sample.jar &"
           }
         }
     }
