@@ -22,7 +22,7 @@ pipeline {
         stage('开始运行'){
           agent { node {label 'master'}}
           steps{
-            sh 'nohup java -jar target/sample.jar --httpPort=8088 &'
+            sh ' nohup java -jar target/sample.jar --httpPort=8088 & '
           }
         }
     }
