@@ -12,10 +12,9 @@ pipeline {
         }
 
         stage('开始构建') {
-
             steps {
                 dir(env.WORKSPACE){
-                  sh "mvn clean package install"
+                  sh "mvn clean  install"
                   sh "printenv"
                   junit allowEmptyResults: true, keepLongStdio: true, testResults: 'target/**/*.xml'
                   sh "mv target/sample-0.0.1-SNAPSHOT.jar target/sample.jar"
