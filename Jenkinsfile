@@ -25,8 +25,8 @@ pipeline {
         stage('开始运行'){
           steps{
             script{
-              sh " nohup java -jar ./target/sample.jar  &"
-              sh "sleep 60"
+              sh 'nohup java -jar ./target/sample.jar  &'
+              sh "sleep 10"
             }
           }
         }
