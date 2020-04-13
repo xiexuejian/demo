@@ -1,18 +1,22 @@
 pipeline {
-    agent none
+    agent { node {label 'master'}}
+    tools{
+      maven 'mymaven'
+    }
     stages {
        stage('拉取代码') {
-            agent { node { label 'master' } }
+
             steps {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3179d59449a89e5a27c52003173267b7902bbfc2', url: 'https://github.com/xiexuejian/demo.git']]])
             }
         }
 
         stage('开始构建') {
-            agent { node { label 'master' } }
+
             steps {
                 dir(env.WORKSPACE){
-                  sh "mvn clean install"
+                  sh "mvn clean package install"
+                  sh "printenv"
                   junit allowEmptyResults: true, keepLongStdio: true, testResults: 'target/**/*.xml'
                   sh "mv target/sample-0.0.1-SNAPSHOT.jar target/sample.jar"
                 }
@@ -20,9 +24,9 @@ pipeline {
         }
 
         stage('开始运行'){
-          agent { node {label 'master'}}
+
           steps{
-            sh ' nohup java -jar target/sample.jar --httpPort=8088 & '
+            sh "nohup java -jar target/sample.jar --httpPort=8088 & "
           }
         }
     }
