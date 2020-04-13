@@ -35,6 +35,11 @@ public class DemoController {
 		mv.addObject("requestname","This request is SleepApi"+",it will sleep "+ tmp +"s !");
 		return mv;
 	}
-	
+
+
+	public String aaa(){
+		return "";
+	}
+
 	
 }
