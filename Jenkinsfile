@@ -21,6 +21,15 @@ pipeline {
                 }
             }
         }
+        stage('Sonarqube') {
+
+          steps {
+              dir(env.WORKSPACE){
+                sh "mvn sonar:sonar -Dsonar.host.url=http://192.168.186.10:9000 -Dsonar.login=fa056e63eb9d119756b0e055ace94f606d3de4ec"
+              }
+          }
+        }
+
         stage('开始运行'){
           steps{
             withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
