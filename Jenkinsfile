@@ -1,7 +1,7 @@
 pipeline {
     agent { node {label 'master'}}
     tools{
-      maven 'mymaven'
+      maven 'maven3.5'
     }
     stages {
        stage('拉取代码') {
