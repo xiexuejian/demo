@@ -25,7 +25,7 @@ pipeline {
 
           steps {
               dir(env.WORKSPACE){
-                sh "mvn sonar:sonar -Dsonar.host.url=http://192.168.186.10:9000 -Dsonar.login=fa056e63eb9d119756b0e055ace94f606d3de4ec"
+                sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
               }
           }
         }
