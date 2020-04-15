@@ -38,7 +38,7 @@ public class DemoController {
 
 
 	public String aaa(){
-		return "";
+		return "hello";
 	}
 
 	
