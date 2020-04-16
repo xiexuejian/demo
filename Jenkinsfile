@@ -48,7 +48,7 @@ pipeline {
                 subject: "成功: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
                     <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-                to: "xxjxiexuejian@163.com",
+                to: "1521107575@qq.com",
                 from: "xxjxiexuejian@163.com"
             )
         }
@@ -57,7 +57,7 @@ pipeline {
                 subject: "失败: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
                     <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-                to: "xxjxiexuejian@163.com",
+                to: "1521107575@qq.com",
                 from: "xxjxiexuejian@163.com"
             )
         }
