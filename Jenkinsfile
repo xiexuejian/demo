@@ -88,7 +88,7 @@ pipeline {
                        </table>
                    </body>  ''',
             subject: '[测试邮件通知] ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
-            to: '1521107575@qq.com;',
+            to: '1521107575@qq.com',
             from: 'xxjxiexuejian@163.com'
         }
     }
