@@ -44,6 +44,11 @@ pipeline {
 
     post {
         success {
+            dingTalk accessToken:'https://oapi.dingtalk.com/robot/send?access_token=d56b8f2d1d030c4583fc51ef6ad82d5cbe112dd275fa92cd4945c274944949dd',
+            imageUrl:'http://webfont.qxsoho.cn/success.png',
+            jenkinsUrl:'http://39.96.168.238:8888/',
+            message:'可爱的小爱同学，通知大家人脸识别部署成功！！！',
+            notifyPeople:'',
             emailext (
                 subject: "成功: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
@@ -53,6 +58,11 @@ pipeline {
             )
         }
         failure {
+            dingTalk accessToken:'https://oapi.dingtalk.com/robot/send?access_token=d56b8f2d1d030c4583fc51ef6ad82d5cbe112dd275fa92cd4945c274944949dd',
+            imageUrl:'http://webfont.qxsoho.cn/success.png',
+            jenkinsUrl:'http://39.96.168.238:8888/',
+            message:'小爱同学告诉大家一个不幸的消息，人脸识别部署失败了，具体原因请到后台查看',
+            notifyPeople:'',
             emailext (
                 subject: "失败: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
