@@ -10,7 +10,13 @@ pipeline {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3179d59449a89e5a27c52003173267b7902bbfc2', url: 'https://github.com/xiexuejian/demo.git']]])
             }
         }
-
+        stage('代码质量检测') {
+           steps {
+               dir(env.WORKSPACE){
+                 sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
+               }
+           }
+         }
         stage('开始构建') {
             steps {
                 dir(env.WORKSPACE){
@@ -21,14 +27,7 @@ pipeline {
                 }
             }
         }
-        stage('Sonarqube') {
 
-          steps {
-              dir(env.WORKSPACE){
-                sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
-              }
-          }
-        }
 
         stage('开始运行'){
           steps{
@@ -88,7 +87,7 @@ pipeline {
                        </table>
                    </body>  ''',
             subject: '[测试邮件通知] ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!',
-            to: '1521107575@qq.com',
+            to: 'xxjxiexuejian@163.com',
             from: 'xxjxiexuejian@163.com'
         }
     }
