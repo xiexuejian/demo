@@ -41,21 +41,4 @@ pipeline {
           }
         }
     }
-
-    post {
-        success {
-            dingTalk accessToken:'https://oapi.dingtalk.com/robot/send?access_token=d56b8f2d1d030c4583fc51ef6ad82d5cbe112dd275fa92cd4945c274944949dd',
-            imageUrl:'http://webfont.qxsoho.cn/success.png',
-            jenkinsUrl:'http://39.96.168.238:8888/',
-            message:'小爱同学提示: 人脸识别部署成功！！！',
-            notifyPeople:''
-        }
-        failure {
-            dingTalk accessToken:'https://oapi.dingtalk.com/robot/send?access_token=d56b8f2d1d030c4583fc51ef6ad82d5cbe112dd275fa92cd4945c274944949dd',
-            imageUrl:'http://webfont.qxsoho.cn/failure.png',
-            jenkinsUrl:'http://39.96.168.238:8888/',
-            message:'小爱同学提示: 人脸识别部署失败！！！',
-            notifyPeople:''
-        }
-    }
 }
