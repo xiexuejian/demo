@@ -40,21 +40,21 @@ pipeline {
           }
           }
         }
+    }
 
-        post{
-             success {
-                dingtalk (
-                    robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
-                    type: 'LINK',
-                    title: '小爱同学提示：你有新的消息，请注意查收',
-                    text: [
-                        '人脸识别部署信息',
-                        '可爱的小爱同学通知你，项目部署成功'
-                    ],
-                    messageUrl: 'http://www.baidu.com',
-                    picUrl: 'https://www.picdiet.com/img/photographer_compressed.jpg'
-                )
-            }
+    post{
+         success {
+            dingtalk (
+                robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
+                type: 'LINK',
+                title: '小爱同学提示：你有新的消息，请注意查收',
+                text: [
+                    '人脸识别部署信息',
+                    '可爱的小爱同学通知你，项目部署成功'
+                ],
+                messageUrl: 'http://www.baidu.com',
+                picUrl: 'https://www.picdiet.com/img/photographer_compressed.jpg'
+            )
         }
     }
 }
