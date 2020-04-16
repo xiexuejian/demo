@@ -39,6 +39,7 @@ public class DemoController {
 
 	public String aaa(){
 		String a = "12";
+		String ba = "12";
 		return "hello";
 	}
 
