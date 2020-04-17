@@ -28,6 +28,7 @@ pipeline {
              }
          }
 
+
         stage('开始构建') {
             steps {
                 dir(env.WORKSPACE){
@@ -38,6 +39,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('开始运行'){
           steps{
