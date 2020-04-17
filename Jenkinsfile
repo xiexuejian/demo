@@ -22,7 +22,7 @@ pipeline {
              steps {
                  sh "rm -rf  /opt/workspace/jmeter/*"
                  sh "mkdir -p /opt/workspace/jmeter/output"
-                 sh "jmeter.sh -n -t ./jmeter/demo.jmx  -l /opt/workspace/jmeter/demo.jtl -j /opt/workspace/jmeter/demo.log -e -o /opt/workspace/jmeter/output"
+                 sh "jmeter -n -t ./jmeter/demo.jmx  -l /opt/workspace/jmeter/demo.jtl -j /opt/workspace/jmeter/demo.log -e -o /opt/workspace/jmeter/output"
                  step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])
                  perfReport "jmeter/demo.jtl"
              }
