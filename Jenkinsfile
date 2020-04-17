@@ -54,49 +54,4 @@ pipeline {
         }
     }
 
-
-
-    post{
-         success {
-            dingtalk (
-                robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
-                type: 'LINK',
-                title: '小爱同学提示：你有新的消息，请注意查收',
-                text: [
-                    '人脸识别部署信息',
-                    '可爱的小爱同学通知你，项目部署成功',
-                    '工作人员可以点击登录Jenkins进行查看'
-                ],
-                messageUrl: 'http://39.96.168.238:8888/',
-                picUrl: 'https://www.picdiet.com/img/photographer_compressed.jpg'
-            )
-        }
-
-        failure {
-            dingtalk (
-                robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
-                type: 'ACTION_CARD',
-                title: '小爱同学提示：你有新的消息，请注意查收',
-                text: [
-                    '![screenshot](@lADOpwk3K80C0M0FoA)',
-                    '人脸识别部署信息',
-                    '可爱的小爱同学通知你，项目部署失败',
-                    '工作人员可以点击登录Jenkins进行查看'
-                ],
-                messageUrl: 'http://39.96.168.238:8888/',
-                picUrl: 'https://www.picdiet.com/img/photographer_compressed.jpg',
-             btns: [
-                  [
-                      title: '内容不错',
-                      actionUrl: 'https://www.dingtalk.com/'
-                  ],
-                  [
-                      title: '不感兴趣',
-                      actionUrl: 'https://www.dingtalk.com/'
-                  ]
-              ],
-              btnLayout: 'V'
-            )
-        }
-    }
 }
