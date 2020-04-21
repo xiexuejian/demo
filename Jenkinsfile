@@ -8,6 +8,7 @@ pipeline {
 
             steps {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3179d59449a89e5a27c52003173267b7902bbfc2', url: 'https://github.com/xiexuejian/demo.git']]])
+               env.check_to_tag="1.0"
             }
         }
         stage('代码质量检测') {
@@ -40,7 +41,7 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry('http://39.96.168.238', 'c004b825-af53-4364-b247-79edff726aa1'){
-                        def BuildImage = docker.build("http://39.96.168.238/xxj/python:1.0")
+                        def BuildImage = docker.build("http://39.96.168.238/xxj/http:${check_to_tag}")
                         BuildImage.push()
                     }
                 }
