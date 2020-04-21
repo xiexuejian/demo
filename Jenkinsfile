@@ -18,17 +18,6 @@ pipeline {
            }
          }
 
-         stage('Jmeter测试') {
-             steps {
-                 sh "rm -rf  /opt/workspace/jmeter/*"
-                 sh "mkdir -p /opt/workspace/jmeter/output"
-                 sh "jmeter -n -t ./jmeter/demo.jmx  -l /opt/workspace/jmeter/demo.jtl -j /opt/workspace/jmeter/demo.log -e -o /opt/workspace/jmeter/output"
-                 step([$class: 'ArtifactArchiver', artifacts: 'jmeter/*,jmeter/output/*'])
-                 perfReport "jmeter/demo.jtl"
-             }
-         }
-
-
         stage('开始构建') {
             steps {
                 dir(env.WORKSPACE){
@@ -40,6 +29,22 @@ pipeline {
             }
         }
 
+        stage('初始化docker环境') {
+           steps {
+                script{
+                  def dockerPath = tool 'docker19'
+                  env.PATH = "${dockerPath}/bin:${env.PATH}"
+                }
+           }
+        }
+
+        stage('运行docker命令') {
+            steps {
+                script{
+                  sh "docker --version"
+                }
+            }
+        }
 
         stage('开始运行'){
           steps{
