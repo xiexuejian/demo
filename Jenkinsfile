@@ -3,12 +3,15 @@ pipeline {
     tools{
       maven 'maven3.5'
     }
+    environment {
+        env.check_to_tag="1.0"
+    }
+
     stages {
        stage('拉取代码') {
 
             steps {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3179d59449a89e5a27c52003173267b7902bbfc2', url: 'https://github.com/xiexuejian/demo.git']]])
-               env.check_to_tag="1.0"
             }
         }
         stage('代码质量检测') {
