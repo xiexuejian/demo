@@ -3,6 +3,9 @@ pipeline {
     tools{
       maven 'maven3.5'
     }
+    environment{
+
+    }
     stages {
        stage('拉取代码') {
 
@@ -37,7 +40,12 @@ pipeline {
                 }
            }
         }
-
+        stage('构建镜像并发布到harbor') {
+            docker.withRegistry('http://39.96.168.238', 'c004b825-af53-4364-b247-79edff726aa1'){
+                def BuildImage = docker.build("http://39.96.168.238/xxj/python:1.0")
+                BuildImage.push()
+            }
+        }
         stage('运行docker命令') {
             steps {
                 script{
