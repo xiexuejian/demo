@@ -3,9 +3,6 @@ pipeline {
     tools{
       maven 'maven3.5'
     }
-    environment{
-
-    }
     stages {
        stage('拉取代码') {
 
