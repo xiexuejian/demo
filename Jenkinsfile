@@ -44,7 +44,6 @@ pipeline {
             agent {dockerfile true}
             steps{
                 script{
-                    sh "docker rmi 39.96.168.238/xxj/python:3.0"
                     sh "docker build -t 39.96.168.238/xxj/python:3.0 ."
                     sh "docker login 39.96.168.238 -u admin -p 123456"
                     sh "docker push 39.96.168.238/xxj/python:3.0"
