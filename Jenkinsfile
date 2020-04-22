@@ -41,7 +41,7 @@ pipeline {
            }
         }
         stage('构建镜像并发布到harbor') {
-            agent {dockerfile true}
+           agent {node {label 'master'}}
             steps{
                 script{
                     sh "pwd"
