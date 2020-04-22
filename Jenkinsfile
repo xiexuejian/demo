@@ -39,11 +39,13 @@ pipeline {
         }
         stage('构建镜像并发布到harbor') {
             steps{
-                withDockerRegistry(credentialsId: 'c004b825-af53-4364-b247-79edff726aa1', toolName: 'docker19', url: 'http://39.96.168.238') {
-                    script{
-                        sh "docker --version"
-                        sh "docker build -t 39.96.168.238/xxj/python:2.0 . "
-                        sh "docker push 39.96.168.238/xxj/python:2.0"
+                script{
+                    withDockerRegistry(credentialsId: 'c004b825-af53-4364-b247-79edff726aa1', toolName: 'docker19', url: 'http://39.96.168.238') {
+                        script{
+                            sh "docker --version"
+                            sh "docker build -t 39.96.168.238/xxj/python:2.0 . "
+                            sh "docker push 39.96.168.238/xxj/python:2.0"
+                        }
                     }
                 }
             }
