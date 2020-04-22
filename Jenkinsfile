@@ -44,7 +44,7 @@ pipeline {
             agent {dockerfile true}
             steps{
                 script{
-                    sh "docker build -f 39.96.168.238/xxj/python:3.0  /root/.jenkins/workspace/pipeline-junit"
+                    sh "docker build -f /root/.jenkins/workspace/pipeline-junit/Dockerfile -t 39.96.168.238/xxj/python:3.0  ."
                     sh "docker login 39.96.168.238 -u admin -p 123456"
                     sh "docker push 39.96.168.238/xxj/python:3.0"
                 }
