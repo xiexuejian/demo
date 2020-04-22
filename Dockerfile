@@ -1,3 +1,4 @@
+FROM ansible/centos7-ansible
 WORKDIR /root
 COPY ./target/sample.jar /root
 RUN cd /root
