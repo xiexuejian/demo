@@ -45,7 +45,7 @@ pipeline {
             steps{
                 script{
                     sh "pwd"
-                    sh "docker build -f /root/.jenkins/workspace/pipeline-junit/Dockerfile -t 39.96.168.238/xxj/python:3.0  ."
+                    sh "docker build -f ./Dockerfile -t 39.96.168.238/xxj/python:3.0  ."
                     sh "docker login 39.96.168.238 -u admin -p 123456"
                     sh "docker push 39.96.168.238/xxj/python:3.0"
                 }
