@@ -44,10 +44,10 @@ pipeline {
             agent {dockerfile true}
             steps{
                 script{
-                    docker.withRegistry('http://39.96.168.238', 'c004b825-af53-4364-b247-79edff726aa1'){
-                        def BuildImage = docker.build("39.96.168.238/xxj/python:3.0","-f  .")
-
-                    }
+                    sh "docker rmi 39.96.168.238/xxj/python:3.0"
+                    sh "docker build -t 39.96.168.238/xxj/python:3.0 ."
+                    sh "docker login 39.96.168.238 -u admin -p 123456"
+                    sh "docker push 39.96.168.238/xxj/python:3.0"
                 }
             }
         }
