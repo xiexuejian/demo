@@ -45,7 +45,7 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry('http://39.96.168.238', 'c004b825-af53-4364-b247-79edff726aa1'){
-                        def BuildImage = docker.build("39.96.168.238/xxj/python:3.0","-t .")
+                        def BuildImage = docker.build("39.96.168.238/xxj/python:3.0","-f  .")
 
                     }
                 }
