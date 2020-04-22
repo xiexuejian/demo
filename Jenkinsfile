@@ -45,22 +45,16 @@ pipeline {
             steps{
                 script{
                     sh "pwd"
-                    sh "docker build -f ./Dockerfile -t 39.96.168.238/xxj/python:3.0  ."
+                    sh "docker build -f ./Dockerfile -t 39.96.168.238/xxj/jenkins:1.0  ."
                     sh "docker login 39.96.168.238 -u admin -p 123456"
-                    sh "docker push 39.96.168.238/xxj/python:3.0"
+                    sh "docker push 39.96.168.238/xxj/jenkins:1.0"
                 }
             }
         }
         stage('开始运行'){
         agent {node {label 'master'}}
           steps{
-            withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-                retry(3) {
-                    script{
-                        sh 'nohup java -jar ./target/sample.jar  &'
-                    }
-                }
-            }
+            sh "docker run -it --name=jenkins -p 8080:8080 39.96.168.238/xxj/jenkins:1.0"
           }
         }
     }

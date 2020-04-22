@@ -1,6 +1,5 @@
-FROM python:3.7.1-alpine
-RUN mkdir /test
-WORKDIR /test
-COPY ./ /test
-EXPOSE 8000
-CMD ["python","-m","http.server"]
+WORKDIR /root
+COPY ./target/sample.jar /root
+RUN cd /root
+EXPOSE 8080
+CMD ["java","-jar","sample.jar","&"]
