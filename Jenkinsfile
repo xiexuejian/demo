@@ -1,5 +1,8 @@
 pipeline {
-    agent { dockerfile true }
+    agent {
+        node {label 'master'}
+        dockerfile true
+    }
     tools{
       maven 'maven3.5'
     }
@@ -42,7 +45,7 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry('http://39.96.168.238', 'c004b825-af53-4364-b247-79edff726aa1'){
-                        def BuildImage = docker.build("39.96.168.238/xxj/http:${check_to_tag}","-t .")
+                        def BuildImage = docker.build("39.96.168.238/xxj/http:${check_to_tag}")
                         BuildImage.push()
                     }
                 }
