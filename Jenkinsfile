@@ -4,7 +4,7 @@ pipeline {
       maven 'maven3.5'
     }
     environment{
-       registry = "http://121.36.31.229:8595"
+       registry = "121.36.31.229:8595"
        pingZheng = 'ddb40bf6-06ae-4728-881f-a8459909209a'
      }
     stages {
@@ -48,9 +48,9 @@ pipeline {
             steps{
                 withDockerRegistry([
                    credentialsId:"${pingZheng}",
-                   url:"${registry}"
+                   url:"http://${registry}"
                 ]){
-                   sh "docker build . -t ${registry}/jenkins:v2"
+                   sh "docker build -t ${registry}/jenkins:v2  ."
                    sh "docker push ${registry}/jenkins:v2"
                 }
             }
