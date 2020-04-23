@@ -5,7 +5,7 @@ pipeline {
     }
     environment{
        registry = "http://121.36.31.229:8595"
-       registryCrendential = 'ddb40bf6-06ae-4728-881f-a8459909209a'
+       pingZheng = 'ddb40bf6-06ae-4728-881f-a8459909209a'
      }
     stages {
        stage('拉取代码') {
@@ -47,7 +47,7 @@ pipeline {
            agent {node {label 'master'}}
             steps{
                 withDockerRegistry([
-                   credentialsId:"${registryCredential}",
+                   credentialsId:"${pingZheng}",
                    url:"${registry}"
                 ]){
                    sh "docker build . -t ${registry}/jenkins:v2"
