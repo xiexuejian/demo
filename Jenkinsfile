@@ -3,7 +3,10 @@ pipeline {
     tools{
       maven 'maven3.5'
     }
-
+    environment{
+       registry = "http://121.36.31.229:8595"
+       registryCrendential = 'ddb40bf6-06ae-4728-881f-a8459909209a'
+     }
     stages {
        stage('拉取代码') {
             agent {node {label 'master'}}
@@ -40,21 +43,22 @@ pipeline {
                 }
            }
         }
-        stage('构建镜像并发布到harbor') {
+        stage('构建镜像并发布到Nexus') {
            agent {node {label 'master'}}
             steps{
-                script{
-                    sh "pwd"
-                    sh "docker build -f ./Dockerfile -t 39.96.168.238/xxj/jenkins:1.0  ."
-                    sh "docker login 39.96.168.238 -u admin -p 123456"
-                    sh "docker push 39.96.168.238/xxj/jenkins:1.0"
+                withDockerRegistry([
+                   credentialsId:"${registryCredential}",
+                   url:"${registry}"
+                ]){
+                   sh "docker build . -t ${registry}/jenkins:v2"
+                   sh "docker push ${registry}/jenkins:v2"
                 }
             }
         }
         stage('开始运行'){
         agent {node {label 'master'}}
           steps{
-            sh "docker run -it --name=jenkins -p 8080:8080 39.96.168.238/xxj/jenkins:1.0"
+            sh "docker run -it --name=jenkins -p 8080:8080 ${registry}/jenkins:v2"
           }
         }
     }
