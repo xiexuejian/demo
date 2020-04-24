@@ -1,5 +1,5 @@
 - name: Copy sample.jar to remote vm
-  copy: src=/opt/tmp/sample.jar dest=~/  mode=0755
+  copy: src=./target/sample.jar dest=~/  mode=0755
 
 - name: Get running sample.jar
   shell: "ps -ef | grep -v grep | grep -w sample.jar | awk '{print $2}'"
@@ -20,8 +20,8 @@
   shell: "kill -9 {{ item }}"
   with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
 
-- name: Sleep 10s
-  shell: sleep 10s;
+- name: Sleep 3s
+  shell: sleep 3s;
 
 - name: Deploy sample.jar
   shell: nohup java -jar ~/sample.jar  > ~/nohup.out 2>&1 &

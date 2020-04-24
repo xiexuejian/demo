@@ -2,6 +2,7 @@ pipeline {
     agent none
     tools{
       maven 'maven3.5'
+      ansible 'MyAnsible'
     }
     environment{
        registry = "121.36.31.229:8595"
@@ -34,6 +35,13 @@ pipeline {
                 }
             }
         }
+
+        stage('执行ansible'){
+            agent {node {label 'master'}}
+            steps{
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'MyAnsible', inventory: 'ansible/hosts', playbook: 'ansible/deploy.yml'
+            }
+        }
         stage('初始化docker环境') {
         agent {node {label 'master'}}
            steps {
@@ -50,16 +58,10 @@ pipeline {
                    credentialsId:"${pingZheng}",
                    url:"http://${registry}"
                 ]){
-                   sh "docker build -t ${registry}/jenkins:v2  ."
-                   sh "docker push ${registry}/jenkins:v2"
+                   sh "docker build -t ${registry}/jenkins:v3  ."
+                   sh "docker push ${registry}/jenkins:v3"
                 }
             }
-        }
-        stage('开始运行'){
-        agent {node {label 'master'}}
-          steps{
-            sh "docker run -it --name=jenkins -p 8080:8080 ${registry}/jenkins:v2"
-          }
         }
     }
 }
