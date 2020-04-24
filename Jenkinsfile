@@ -2,7 +2,6 @@ pipeline {
     agent none
     tools{
       maven 'maven3.5'
-      ansible 'MyAnsible'
     }
     environment{
        registry = "121.36.31.229:8595"
