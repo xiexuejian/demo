@@ -38,7 +38,7 @@ pipeline {
         stage('执行ansible'){
             agent {node {label 'master'}}
             steps{
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'MyAnsible', inventory: 'ansible/hosts', playbook: 'ansible/deploy.yml'
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'MyAnsible', inventory: '/root/.jenkins/workspace/pipeline-junit/ansible/hosts', playbook: '/root/.jenkins/workspace/pipeline-junit/ansible/deploy.yml'
             }
         }
         stage('初始化docker环境') {
