@@ -48,6 +48,19 @@ pipeline {
             }
         }
 
+        stage('依赖安全检查'){
+            agent {node {label 'master'}}
+            when {
+              expression
+                 {return isDC}
+            }
+            steps{
+                dependencyCheckAnalyzer datadir: '',hintsFile: '',includeCsvReports: false,includeHtmlReports: false,includeJsonReports: false,isAutoupdateDisabled: false, outdir: '',scanpath: '**/lib/*.jar',skipOnScmChange: false,skipOnUpstreamChange: false,suppressionFile: '',zipExtensions: ''
+
+                dependencyCheckPublisher canComputeNew: false,defaultEncoding: '',failedTotalHigh: '0',healthy: '',pattern: '',unHealthy: ''
+            }
+        }
+
         stage('执行ansible'){
             agent {node {label 'master'}}
             steps{
