@@ -25,6 +25,14 @@ pipeline {
                    }
                  }
 
+                stage('单元测试'){
+                    steps{
+                        echo "单元测试开始。。。。"
+                        sh "mvn org.jacoco-maven-plugin:prepare-agent -f pom.xml clean test -Dautoconfig.skip=true -Dmaven.test.skip=false -Dmaven.test.failure.ignore=true"
+                        junit '**/target/*/*.xml'
+                        jacoco changeBuildStatus: true,maximumLineCoverage:70
+                    }
+                }
                 stage('开始构建') {
                 agent {node {label 'master'}}
                     steps {
