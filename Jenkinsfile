@@ -28,8 +28,8 @@ pipeline {
                 stage('单元测试'){
                     steps{
                         echo "单元测试开始。。。。"
-                        sh "mvn org.jacoco-maven-plugin:prepare-agent -f pom.xml clean test -Dautoconfig.skip=true -Dmaven.test.skip=false -Dmaven.test.failure.ignore=true"
-                        junit '**/target/*/*.xml'
+                        sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent -f pom.xml clean test -Dautoconfig.skip=true -Dmaven.test.skip=false -Dmaven.test.failure.ignore=true"
+                        junit '**/target/surefire-reports/*.xml'
                         jacoco changeBuildStatus: true, maximumLineCoverage: "70"
                     }
                 }
