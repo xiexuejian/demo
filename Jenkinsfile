@@ -26,6 +26,7 @@ pipeline {
                  }
 
                 stage('单元测试'){
+                    agent {node {label 'master'}}
                     steps{
                         echo "单元测试开始。。。。"
                         sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent -f pom.xml clean test -Dautoconfig.skip=true -Dmaven.test.skip=false -Dmaven.test.failure.ignore=true"
