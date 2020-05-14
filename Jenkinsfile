@@ -54,9 +54,7 @@ pipeline {
     }
 
     post{
-        always{
-            archiveArtifacts artifacts: '**/target/*.jar',fingerprint: true
-        }
+
         success {
             dingtalk (
                 robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
@@ -98,5 +96,10 @@ pipeline {
                 btnLayout: 'V'
             )
         }
+
+         always{
+            sh 'pwd'
+            archiveArtifacts artifacts: '**/target/*.jar',fingerprint: true
+         }
     }
 }
