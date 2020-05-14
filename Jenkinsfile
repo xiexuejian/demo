@@ -34,7 +34,7 @@ pipeline {
                           sh "pwd"
                           sh "printenv"
                           junit allowEmptyResults: true, keepLongStdio: true, testResults: 'target/**/*.xml'
-                          sh "mv target/sample-0.0.1-SNAPSHOT.jar target/sample.jar"
+                          sh "mv /root/.jenkins/workspace/pipeline-junit@2/target/sample-0.0.1-SNAPSHOT.jar   /root/.jenkins/workspace/pipeline-junit@2/target/sample.jar"
                         }
                     }
                 }
