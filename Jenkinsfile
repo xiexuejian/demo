@@ -15,7 +15,7 @@ pipeline {
             }
         }
         stage('构建'){
-            parallel{
+
                 stage('代码质量检测') {
                     agent {node {label 'master'}}
                    steps {
@@ -37,7 +37,7 @@ pipeline {
                         }
                     }
                 }
-            }
+
         }
         stage('构建镜像并发布到Nexus') {
            agent {node {label 'master'}}
