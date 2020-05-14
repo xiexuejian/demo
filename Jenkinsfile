@@ -14,18 +14,29 @@ pipeline {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3179d59449a89e5a27c52003173267b7902bbfc2', url: 'https://github.com/xiexuejian/demo.git']]])
             }
         }
-
-
-        stage('代码质量检测') {
+        stage('测试'){
             agent {node {label 'master'}}
-           steps {
-               dir(env.WORKSPACE){
-                 sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
-               }
-           }
-         }
+            parallel{
+                stage('单元测试'){
+                    agent {node {label 'master'}}
+                        steps{
+                        echo "单元测试开始。。。。"
+                        sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent -f pom.xml clean test -Dautoconfig.skip=true -Dmaven.test.skip=false -Dmaven.test.failure.ignore=true"
+                        junit '**/target/surefire-reports/*.xml'
+                        jacoco changeBuildStatus: true, maximumLineCoverage: "70"
+                    }
+                }
 
-
+                stage('代码质量检测') {
+                    agent {node {label 'master'}}
+                   steps {
+                       dir(env.WORKSPACE){
+                         sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
+                       }
+                   }
+                 }
+            }
+        }
         stage('开始构建') {
         agent {node {label 'master'}}
             steps {
@@ -38,19 +49,32 @@ pipeline {
             }
         }
 
-
-        stage('构建镜像并发布到Nexus') {
-           agent {node {label 'master'}}
-            steps{
-                withDockerRegistry([
-                   credentialsId:"${pingZheng}",
-                   url:"http://${registry}"
-                ]){
-                   sh "docker build -t ${registry}/jenkins:v3  ."
-                   sh "docker push ${registry}/jenkins:v3"
+        stage('镜像'){
+             agent {node {label 'master'}}
+             parallel{
+                stage('构建镜像并发布到Nexus') {
+                   agent {node {label 'master'}}
+                    steps{
+                        withDockerRegistry([
+                           credentialsId:"${pingZheng}",
+                           url:"http://${registry}"
+                        ]){
+                           sh "docker build -t ${registry}/jenkins:v3  ."
+                           sh "docker push ${registry}/jenkins:v3"
+                        }
+                    }
                 }
-            }
-        }
+                 stage('初始化docker环境') {
+                    agent {node {label 'master'}}
+                       steps {
+                            script{
+                              def dockerPath = tool 'docker19'
+                              env.PATH = "${dockerPath}/bin:${env.PATH}"
+                            }
+                       }
+                    }
+             }
+          }
     }
 
     post{
