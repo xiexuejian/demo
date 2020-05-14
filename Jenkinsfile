@@ -14,7 +14,7 @@ pipeline {
                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '3179d59449a89e5a27c52003173267b7902bbfc2', url: 'https://github.com/xiexuejian/demo.git']]])
             }
         }
-        stage('测试'){
+        stage('单元测试'){
             parallel{
                 stage('单元测试'){
                     agent {node {label 'master'}}
@@ -25,17 +25,18 @@ pipeline {
                         jacoco changeBuildStatus: true, maximumLineCoverage: "70"
                     }
                 }
-
-                stage('代码质量检测') {
-                    agent {node {label 'master'}}
-                   steps {
-                       dir(env.WORKSPACE){
-                         sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
-                       }
-                   }
-                 }
             }
         }
+
+         stage('代码质量检测') {
+            agent {node {label 'master'}}
+           steps {
+               dir(env.WORKSPACE){
+                 sh "mvn sonar:sonar -Dsonar.host.url=http://121.36.31.229:9000 -Dsonar.login=f4a34690771d6da24bd3fa9a94f33eefa6cf05d8"
+               }
+           }
+         }
+
         stage('开始构建') {
         agent {node {label 'master'}}
             steps {
