@@ -1,7 +1,5 @@
 package com.dxc.ddccloud.demo.controller;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,13 +34,4 @@ public class DemoController {
 		return mv;
 	}
 
-
-	public String aaa(){
-		String a = "12";
-		String ba = "12";
-		String cba = "12";
-		return "hello";
-	}
-
-	
 }
