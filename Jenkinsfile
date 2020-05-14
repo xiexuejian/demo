@@ -98,7 +98,9 @@ pipeline {
         }
 
          always{
-            sh 'pwd'
+             script{
+                 sh 'pwd'
+             }
             archiveArtifacts artifacts: '**/target/*.jar',fingerprint: true
          }
     }
