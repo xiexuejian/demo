@@ -25,15 +25,7 @@ pipeline {
                    }
                  }
 
-                stage('单元测试'){
-                    agent {node {label 'master'}}
-                    steps{
-                        echo "单元测试开始。。。。"
-                        sh "mvn org.jacoco:jacoco-maven-plugin:prepare-agent -f pom.xml clean test -Dautoconfig.skip=true -Dmaven.test.skip=false -Dmaven.test.failure.ignore=true"
-                        junit '**/target/surefire-reports/*.xml'
-                        jacoco changeBuildStatus: true, maximumLineCoverage: "70"
-                    }
-                }
+
                 stage('开始构建') {
                 agent {node {label 'master'}}
                     steps {
@@ -47,20 +39,6 @@ pipeline {
                 }
             }
         }
-
-        stage('依赖安全检查'){
-            agent {node {label 'master'}}
-            when {
-              expression
-                 {return isDC}
-            }
-            steps{
-                dependencyCheckAnalyzer datadir: '',hintsFile: '',includeCsvReports: false,includeHtmlReports: false,includeJsonReports: false,isAutoupdateDisabled: false, outdir: '',scanpath: '**/lib/*.jar',skipOnScmChange: false,skipOnUpstreamChange: false,suppressionFile: '',zipExtensions: ''
-
-                dependencyCheckPublisher canComputeNew: false,defaultEncoding: '',failedTotalHigh: '0',healthy: '',pattern: '',unHealthy: ''
-            }
-        }
-
         stage('执行ansible'){
             agent {node {label 'master'}}
             steps{
@@ -88,7 +66,49 @@ pipeline {
                 }
             }
         }
+    }
 
+    post{
+        success {
+            dingtalk (
+                robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
+                type: 'LINK',
+                title: '小爱同学提示：你有新的消息，请注意查收',
+                text: [
+                    '人脸识别部署信息',
+                    '可爱的小爱同学通知你，项目部署成功',
+                    '工作人员可以点击登录Jenkins进行查看'
+                ],
+                messageUrl: 'http://39.96.168.238:8888/',
+                picUrl: 'https://www.picdiet.com/img/photographer_compressed.jpg'
+            )
+        }
 
+        failure {
+            dingtalk (
+                robot: '993af071-b4d3-4544-a2c2-0464e5cf6e48',
+                type: 'ACTION_CARD',
+                title: '小爱同学提示：你有新的消息，请注意查收',
+                text: [
+                    '![screenshot](@lADOpwk3K80C0M0FoA)',
+                    '人脸识别部署信息',
+                    '可爱的小爱同学通知你，项目部署失败',
+                    '工作人员可以点击登录Jenkins进行查看'
+                ],
+                messageUrl: 'http://39.96.168.238:8888/',
+                picUrl: 'https://www.picdiet.com/img/photographer_compressed.jpg',
+                btns: [
+                    [
+                        title: '内容不错',
+                        actionUrl: 'https://www.dingtalk.com/'
+                    ],
+                    [
+                        title: '不感兴趣',
+                        actionUrl: 'https://www.dingtalk.com/'
+                    ]
+                ],
+                btnLayout: 'V'
+            )
+        }
     }
 }
