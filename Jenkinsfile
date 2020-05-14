@@ -8,6 +8,7 @@ pipeline {
        pingZheng = 'ddb40bf6-06ae-4728-881f-a8459909209a'
      }
     stages {
+
        stage('拉取代码') {
             agent {node {label 'master'}}
             steps {
@@ -38,19 +39,32 @@ pipeline {
             }
         }
 
-
-        stage('构建镜像并发布到Nexus') {
-           agent {node {label 'master'}}
-            steps{
-                withDockerRegistry([
-                   credentialsId:"${pingZheng}",
-                   url:"http://${registry}"
-                ]){
-                   sh "docker build -t ${registry}/jenkins:v3  ."
-                   sh "docker push ${registry}/jenkins:v3"
+        stage('镜像'){
+            parallel{
+                stage('初始化docker环境') {
+                       agent {node {label 'master'}}
+                       steps {
+                            script{
+                              def dockerPath = tool 'docker19'
+                              env.PATH = "${dockerPath}/bin:${env.PATH}"
+                            }
+                       }
+                }
+                stage('构建镜像并发布到Nexus') {
+                   agent {node {label 'master'}}
+                    steps{
+                        withDockerRegistry([
+                           credentialsId:"${pingZheng}",
+                           url:"http://${registry}"
+                        ]){
+                           sh "docker build -t ${registry}/jenkins:v3  ."
+                           sh "docker push ${registry}/jenkins:v3"
+                        }
+                    }
                 }
             }
         }
+
     }
 
     post{
