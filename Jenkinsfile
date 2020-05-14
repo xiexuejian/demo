@@ -15,7 +15,6 @@ pipeline {
             }
         }
         stage('测试'){
-            agent {node {label 'master'}}
             parallel{
                 stage('单元测试'){
                     agent {node {label 'master'}}
@@ -50,7 +49,6 @@ pipeline {
         }
 
         stage('镜像'){
-             agent {node {label 'master'}}
              parallel{
                 stage('构建镜像并发布到Nexus') {
                    agent {node {label 'master'}}
