@@ -119,9 +119,5 @@ pipeline {
                 btnLayout: 'V'
             )
         }
-
-         always{
-            archiveArtifacts artifacts: '**/target/*.jar',fingerprint: true
-         }
     }
 }
