@@ -31,6 +31,7 @@ pipeline {
                     steps {
                         dir(env.WORKSPACE){
                           sh "mvn clean  install"
+                          sh "pwd"
                           sh "printenv"
                           junit allowEmptyResults: true, keepLongStdio: true, testResults: 'target/**/*.xml'
                           sh "mv target/sample-0.0.1-SNAPSHOT.jar target/sample.jar"
