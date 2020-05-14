@@ -39,21 +39,6 @@ pipeline {
                 }
             }
         }
-        stage('执行ansible'){
-            agent {node {label 'master'}}
-            steps{
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'MyAnsible', inventory: '/root/.jenkins/workspace/pipeline-junit/ansible/hosts', playbook: '/root/.jenkins/workspace/pipeline-junit/ansible/deploy.yml'
-            }
-        }
-        stage('初始化docker环境') {
-        agent {node {label 'master'}}
-           steps {
-                script{
-                  def dockerPath = tool 'docker19'
-                  env.PATH = "${dockerPath}/bin:${env.PATH}"
-                }
-           }
-        }
         stage('构建镜像并发布到Nexus') {
            agent {node {label 'master'}}
             steps{
